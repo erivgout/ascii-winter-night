@@ -337,7 +337,7 @@ class Scene:
         w, h = self.w, self.h
         self.fz = 2.8
         self.fyb = self.base_row(self.fz)
-        self.fh = max(3, int(round(h * 0.13)))
+        self.fh = max(3, int(round(h * 0.11)))
         fw = (self.fh * 2 + 1) | 1
         if fw > w - 6:
             fw = max(5, (w - 6) | 1)
@@ -820,9 +820,12 @@ class Scene:
             span = max(1, h - 1 - yb)
             nr = len(REFL_CH)
             for y in range(yb + 1, h):
-                tt = (y - yb) / float(span)
-                hwr = self.fw * 0.36 * (1.0 + 0.9 * tt)
-                fade = (1.0 - 0.6 * tt) * flick
+                # a short pool of light: gone 40% of the way to the viewer
+                tt = (y - yb) / float(span) / 0.4
+                if tt >= 1.0:
+                    break
+                hwr = self.fw * 0.36 * (1.0 + 0.5 * tt)
+                fade = (1.0 - tt) * flick * 0.9
                 row = y * w
                 for x in range(max(0, int(cx - hwr)),
                                min(w, int(cx + hwr) + 1)):
