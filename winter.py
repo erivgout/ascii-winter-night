@@ -335,10 +335,10 @@ class Scene:
 
     def _fire_geometry(self):
         w, h = self.w, self.h
-        self.fz = 2.8
+        self.fz = 1.5
         self.fyb = self.base_row(self.fz)
-        self.fh = max(3, int(round(h * 0.11)))
-        fw = (self.fh * 2 + 1) | 1
+        self.fh = max(3, int(round(h * 0.13)))      # flame height: low
+        fw = (max(4, int(h * 0.18)) * 2 + 3) | 1    # flame width: broad
         if fw > w - 6:
             fw = max(5, (w - 6) | 1)
         self.fw = fw
@@ -820,9 +820,8 @@ class Scene:
             span = max(1, h - 1 - yb)
             nr = len(REFL_CH)
             for y in range(yb + 1, h):
-                # a narrow streak that thins out towards the viewer
                 tt = (y - yb) / float(span)
-                hwr = self.fw * 0.36 * (1.0 + 0.5 * tt)
+                hwr = self.fw * 0.36 * (1.0 + 0.9 * tt)
                 fade = (1.0 - 0.6 * tt) * flick
                 row = y * w
                 for x in range(max(0, int(cx - hwr)),
