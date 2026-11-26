@@ -820,12 +820,10 @@ class Scene:
             span = max(1, h - 1 - yb)
             nr = len(REFL_CH)
             for y in range(yb + 1, h):
-                # a short pool of light: gone 40% of the way to the viewer
-                tt = (y - yb) / float(span) / 0.4
-                if tt >= 1.0:
-                    break
+                # a narrow streak that thins out towards the viewer
+                tt = (y - yb) / float(span)
                 hwr = self.fw * 0.36 * (1.0 + 0.5 * tt)
-                fade = (1.0 - tt) * flick * 0.9
+                fade = (1.0 - 0.6 * tt) * flick
                 row = y * w
                 for x in range(max(0, int(cx - hwr)),
                                min(w, int(cx + hwr) + 1)):
