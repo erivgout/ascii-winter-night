@@ -337,8 +337,8 @@ class Scene:
         w, h = self.w, self.h
         self.fz = 2.8
         self.fyb = self.base_row(self.fz)
-        self.fh = max(4, int(h * 0.18))
-        fw = (self.fh * 2 + 3) | 1
+        self.fh = max(3, int(round(h * 0.13)))
+        fw = (self.fh * 2 + 1) | 1
         if fw > w - 6:
             fw = max(5, (w - 6) | 1)
         self.fw = fw
